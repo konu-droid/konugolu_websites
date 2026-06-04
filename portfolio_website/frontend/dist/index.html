@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mohan Konugolu - Portfolio - Robotics Engineer">
+    <title>Mohan Konugolu | Robotics Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style-8ba9d70294665e8a.css" integrity="sha384&#x2D;&#x2B;f60BPBeYqP9WKtuUd7EP5h&#x2B;dd9pm&#x2F;Wyq6k2k&#x2F;QoHcBFAkXf&#x2B;hcYmaE5DgFwvubk"/>
+    
+<link rel="modulepreload" href="/frontend-a269eb873277e638.js" crossorigin=anonymous integrity="sha384-bvErSq/GXRLRxsx4kkmENXQqdhMcIBtG0sbHyV1Ciq1+NFp8SmZC8H0JqsmCvis2"><link rel="preload" href="/frontend-a269eb873277e638_bg.wasm" crossorigin=anonymous integrity="sha384-HJGISt3uOaZjuVsQZ4cDCAbnQ20kwj4qSM3h3hg+zmnlMstMV7AkJVe/b3Ii3Zgo" as="fetch" type="application/wasm"></head>
+<body>
+    <div id="yew-app"></div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        var ytPlayers = [];
+        var ytReady = false;
+
+        function onYouTubeIframeAPIReady() {
+            ytReady = true;
+            initExistingIframes();
+        }
+
+        function initPlayer(iframe) {
+            if (!iframe.id) {
+                iframe.id = 'yt-' + Math.random().toString(36).substr(2, 9);
+            }
+            
+            // Check if player already initialized for this iframe
+            if (iframe.dataset.ytInitialized) return;
+            iframe.dataset.ytInitialized = "true";
+
+            var player = new YT.Player(iframe.id, {
+                events: {
+                    'onStateChange': function(event) {
+                        if (event.data === YT.PlayerState.PLAYING) {
+                            // Pause/reset all other players
+                            ytPlayers.forEach(function(p) {
+                                if (p !== player && typeof p.pauseVideo === 'function') {
+                                    p.pauseVideo();
+                                    // p.seekTo(0); // If strict "reset" is needed
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+            ytPlayers.push(player);
+        }
+
+        function initExistingIframes() {
+            document.querySelectorAll('iframe[src*="youtube.com/embed"]').forEach(function(iframe) {
+                initPlayer(iframe);
+            });
+        }
+
+        // Watch for new iframes added by Yew's virtual DOM
+        var observer = new MutationObserver(function(mutations) {
+            if (!ytReady) return;
+            mutations.forEach(function(mutation) {
+                mutation.addedNodes.forEach(function(node) {
+                    if (node.nodeType === 1) { // ELEMENT_NODE
+                        if (node.tagName === 'IFRAME' && node.src && node.src.includes('youtube.com/embed')) {
+                            initPlayer(node);
+                        } else {
+                            // Search within the added node
+                            node.querySelectorAll('iframe[src*="youtube.com/embed"]').forEach(function(iframe) {
+                                initPlayer(iframe);
+                            });
+                        }
+                    }
+                });
+            });
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+    </script>
+
+<script type="module" nonce="j4ugsMnZIo4EAtF7zKA9Fg==">
+import init, * as bindings from '/frontend-a269eb873277e638.js';
+const wasm = await init({ module_or_path: '/frontend-a269eb873277e638_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script></body>
+</html>

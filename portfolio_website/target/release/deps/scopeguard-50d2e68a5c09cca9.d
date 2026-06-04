@@ -1,0 +1,7 @@
+/home/konu/Documents/portfolio/website/target/release/deps/scopeguard-50d2e68a5c09cca9.d: /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/scopeguard-1.2.0/src/lib.rs
+
+/home/konu/Documents/portfolio/website/target/release/deps/libscopeguard-50d2e68a5c09cca9.rlib: /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/scopeguard-1.2.0/src/lib.rs
+
+/home/konu/Documents/portfolio/website/target/release/deps/libscopeguard-50d2e68a5c09cca9.rmeta: /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/scopeguard-1.2.0/src/lib.rs
+
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/scopeguard-1.2.0/src/lib.rs:
