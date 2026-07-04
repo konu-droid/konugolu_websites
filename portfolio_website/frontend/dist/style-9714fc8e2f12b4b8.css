@@ -28,6 +28,8 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   transition: background-color 0.3s ease;
+  /* Containing block for .bg-shorts so it can span the full page height */
+  position: relative;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -75,6 +77,110 @@ h1, h2, h3, h4, h5, h6 {
   0% { transform: translate(0, 0) scale(1); }
   50% { transform: translate(100px, 100px) scale(1.1); }
   100% { transform: translate(-50px, 150px) scale(0.9); }
+}
+
+/* Ambient background shorts: muted YouTube shorts drifting behind the
+   content. The layer is positioned absolutely over the FULL page height
+   (not the viewport), so each short is anchored to a depth of the page and
+   scrolls into view with the surrounding sections. Hidden until the visitor
+   scrolls past the hero — index.html toggles `is-scrolled` on <body>. */
+.bg-shorts {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  overflow: hidden;
+}
+
+body.is-scrolled .bg-shorts {
+  opacity: 1;
+}
+
+/* One floating phone-shaped short. The cream tint + reduced opacity keep
+   the motion non-distracting behind the glass cards without blurring. */
+.bg-short {
+  position: absolute;
+  width: 336px;
+  aspect-ratio: 9 / 16;
+  border-radius: 28px;
+  overflow: hidden;
+  opacity: 0.5;
+  animation: drift 16s infinite alternate ease-in-out;
+}
+
+.bg-short iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  pointer-events: none;
+}
+
+/* Warm cream tint over each video so the footage blends with the palette */
+.bg-short::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(255, 249, 245, 0.35), rgba(255, 239, 229, 0.5));
+}
+
+/* Stagger position, speed and phase so the shorts never move in lockstep.
+   `top` percentages are depths of the WHOLE page, so each short appears as
+   the visitor scrolls through that part of the site, alternating sides all
+   the way down: skills, experience, projects and education. */
+.bg-short-1 {
+  top: 16%;
+  left: 3%;
+  animation-duration: 13s;
+}
+
+.bg-short-2 {
+  top: 30%;
+  right: 4%;
+  animation-duration: 17s;
+  animation-delay: -12s;
+}
+
+.bg-short-3 {
+  top: 44%;
+  left: 6%;
+  animation-duration: 20s;
+  animation-delay: -7s;
+}
+
+.bg-short-4 {
+  top: 58%;
+  right: 8%;
+  animation-duration: 15s;
+  animation-delay: -4s;
+}
+
+.bg-short-5 {
+  top: 72%;
+  left: 4%;
+  animation-duration: 18s;
+  animation-delay: -10s;
+}
+
+.bg-short-6 {
+  top: 85%;
+  right: 5%;
+  animation-duration: 14s;
+  animation-delay: -6s;
+}
+
+@keyframes drift {
+  0% { transform: translate(0, 0) rotate(-2deg); }
+  50% { transform: translate(50px, -70px) rotate(2deg); }
+  100% { transform: translate(-40px, 50px) rotate(3deg); }
+}
+
+/* Motion-sensitive visitors get the calm static background instead */
+@media (prefers-reduced-motion: reduce) {
+  .bg-shorts {
+    display: none;
+  }
 }
 
 /* Container */
@@ -654,6 +760,8 @@ footer {
 
 .social-links {
   display: flex;
+  /* Wrap so all links stay visible on narrow screens instead of clipping */
+  flex-wrap: wrap;
   justify-content: center;
   gap: 30px;
   margin-bottom: 40px;
@@ -714,12 +822,27 @@ footer {
   .related-projects {
     grid-template-columns: 1fr;
   }
+
+  /* Phones show the same shorts at the same page depths as desktop —
+     only smaller, so the layout stays a single source of truth. */
+  .bg-short {
+    width: 267px;
+  }
 }
 
 /* Narrow phones: tighten card padding and the timeline gutter */
 @media (max-width: 600px) {
   .glass-card {
     padding: 28px 22px;
+  }
+
+  .social-links {
+    gap: 12px;
+  }
+
+  .social-links a {
+    font-size: 15px;
+    padding: 10px 18px;
   }
 
   .timeline-item {

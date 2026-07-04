@@ -50,6 +50,14 @@ struct Video {
     description: &'static str,
 }
 
+/// YouTube ids of the shorts shown in the ambient background layer.
+/// Kept separate from `shorts()` so the Videos page stays independently
+/// curated; the last two ids appear only in the background.
+const AMBIENT_SHORT_IDS: [&str; 6] = [
+    "gcxUFqX_c8s", "z98FERxxiV0", "xmn7SLYRrLw",
+    "ETaIXZGZtn0", "BrIw-jcCLx4", "sEtrTckxYSE",
+];
+
 /// Core skills rendered as pill tags on the home page.
 const SKILLS: [&str; 20] = [
     "Python", "C++", "ROS", "ROS2", "Nav2", "NVIDIA Isaac Sim", "IsaacLab",
@@ -283,6 +291,42 @@ fn highlight_items(highlights: &[&'static str]) -> Html {
     }
 }
 
+/// Renders the ambient background layer of muted, looping YouTube shorts
+/// that drift behind the Home page content.
+///
+/// The layer is purely decorative: iframes are muted, chromeless and
+/// non-interactive, the container is hidden from screen readers, and CSS
+/// keeps it invisible until `index.html` adds `is-scrolled` to `<body>`
+/// once the visitor scrolls past the hero.
+///
+/// Playback is managed by the ambient-player script in `index.html`
+/// (via `enablejsapi=1`): a short only plays while at least half of it is
+/// inside the viewport, and at most two play simultaneously to keep CPU
+/// and bandwidth use low.
+fn background_shorts() -> Html {
+    html! {
+        <div class="bg-shorts" aria-hidden="true">
+            {
+                for AMBIENT_SHORT_IDS.iter().enumerate().map(|(index, embed_id)| {
+                    // loop=1 requires playlist=<same id> for single-video looping
+                    let src = format!(
+                        "https://www.youtube.com/embed/{id}?enablejsapi=1&mute=1&controls=0&loop=1&playlist={id}&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1",
+                        id = embed_id
+                    );
+                    html! {
+                        <div class={format!("bg-short bg-short-{}", index + 1)}>
+                            <iframe src={src}
+                                tabindex="-1"
+                                title="Ambient background video"
+                                allow="autoplay; encrypted-media"></iframe>
+                        </div>
+                    }
+                })
+            }
+        </div>
+    }
+}
+
 /// Renders a project's technology tags as a row of small pills.
 fn tech_tags(tech: &[&'static str]) -> Html {
     html! {
@@ -418,10 +462,12 @@ fn app() -> Html {
                     match *current_page {
                         Page::Home => html! {
                             <>
+                                { background_shorts() }
+
                                 <section class="hero">
                                     <div class="hero-content">
                                         <div class="hero-text">
-                                            <h1>{"Hi, I'm "}<span>{"Mohan"}</span><br/>{"Robotics Engineer"}</h1>
+                                            <h1>{"Hi, I'm "}<span>{"Mohan"}</span><br/></h1>
                                             <p>
                                                 {"Robotics engineer with 5+ years across robotics consulting, autonomous driving and mobile-robot startups. I build digital twins and reinforcement-learning pipelines in NVIDIA Isaac Sim — a Top Rated freelance consultant deploying robotic solutions for companies worldwide."}
                                             </p>

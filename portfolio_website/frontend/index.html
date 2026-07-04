@@ -22,7 +22,82 @@
             initExistingIframes();
         }
 
+        // ---- Ambient background shorts ----------------------------------
+        // Each floating short starts playing as soon as a sliver (5%) of it
+        // enters the viewport, and at most MAX_AMBIENT_PLAYING play at once,
+        // so the background costs little CPU/bandwidth while scrolling.
+        var MAX_AMBIENT_PLAYING = 2;
+        var AMBIENT_PLAY_RATIO = 0.05;
+        var ambientPlayers = []; // { wrapper, player, ready, ratio }
+
+        var ambientObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (change) {
+                ambientPlayers.forEach(function (entry) {
+                    if (entry.wrapper === change.target) {
+                        entry.ratio = change.isIntersecting ? change.intersectionRatio : 0;
+                    }
+                });
+            });
+            updateAmbientPlayback();
+        }, { threshold: [0, 0.05, 0.25, 0.5, 0.75, 1] });
+
+        function initAmbientPlayer(iframe) {
+            if (iframe.dataset.ytAmbient) return;
+            iframe.dataset.ytAmbient = "true";
+            if (!iframe.id) {
+                iframe.id = 'yt-bg-' + Math.random().toString(36).substr(2, 9);
+            }
+            var wrapper = iframe.closest('.bg-short') || iframe;
+            var entry = { wrapper: wrapper, player: null, ready: false, ratio: 0 };
+            entry.player = new YT.Player(iframe.id, {
+                events: {
+                    'onReady': function () {
+                        entry.ready = true;
+                        entry.player.mute(); // muted playback keeps autoplay policies happy
+                        updateAmbientPlayback();
+                    }
+                }
+            });
+            ambientPlayers.push(entry);
+            ambientObserver.observe(wrapper);
+        }
+
+        function updateAmbientPlayback() {
+            // Drop players whose iframe Yew has removed (e.g. after
+            // navigating to the Videos page and back).
+            ambientPlayers = ambientPlayers.filter(function (entry) {
+                if (entry.wrapper.isConnected) return true;
+                try { entry.player.destroy(); } catch (ignored) {}
+                return false;
+            });
+
+            // Rank by visibility; play the most-visible ones that have at
+            // least a sliver on screen, pause everything else.
+            var ranked = ambientPlayers
+                .filter(function (entry) { return entry.ready; })
+                .sort(function (a, b) { return b.ratio - a.ratio; });
+            ranked.forEach(function (entry, rank) {
+                try {
+                    if (rank < MAX_AMBIENT_PLAYING && entry.ratio >= AMBIENT_PLAY_RATIO) {
+                        entry.player.playVideo();
+                    } else {
+                        entry.player.pauseVideo();
+                    }
+                } catch (ignored) {
+                    // Player still initializing or just detached — skip.
+                }
+            });
+        }
+        // ------------------------------------------------------------------
+
         function initPlayer(iframe) {
+            // Ambient background shorts get visibility-managed playback,
+            // not the pause-all-others coordination of the Videos page.
+            if (iframe.closest('.bg-shorts')) {
+                initAmbientPlayer(iframe);
+                return;
+            }
+
             if (!iframe.id) {
                 iframe.id = 'yt-' + Math.random().toString(36).substr(2, 9);
             }
@@ -75,6 +150,12 @@
         });
 
         observer.observe(document.body, { childList: true, subtree: true });
+
+        // Reveal the ambient background shorts (.bg-shorts) once the visitor
+        // scrolls past the hero; CSS fades the layer in/out on this class.
+        window.addEventListener('scroll', function () {
+            document.body.classList.toggle('is-scrolled', window.scrollY > window.innerHeight * 0.5);
+        }, { passive: true });
     </script>
 </body>
 </html>
