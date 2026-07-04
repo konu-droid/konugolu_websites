@@ -511,7 +511,7 @@ fn app() -> Html {
                         <a href="https://www.linkedin.com/in/kvs-mohan-vamsi-1b2a52120/" target="_blank">{"LinkedIn"}</a>
                         <a href="https://youtube.com/@konudroid?feature=shared" target="_blank">{"YouTube"}</a>
                         <a href="https://www.upwork.com/freelancers/~0106f44a845518bf78?mp_source=share" target="_blank">{"Upwork"}</a>
-                        <a href="https://github.com/Hyperspawn/dropbear_isaac" target="_blank">{"GitHub"}</a>
+                        <a href="https://github.com/konu-droid" target="_blank">{"GitHub"}</a>
                     </div>
                     <p style="color: var(--text-secondary); font-size: 14px;">
                         {"© 2026 Mohan Konugolu. Built with Rust and Yew."}

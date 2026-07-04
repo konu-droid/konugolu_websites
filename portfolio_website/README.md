@@ -59,21 +59,21 @@ docker run --rm -p 8080:8080 portfolio
 
 ### 2. Deploy to Cloud Run
 The image lives in Artifact Registry at
-`europe-west2-docker.pkg.dev/portfolio-498917/portfolio-rust/portfolio`.
+`europe-west1-docker.pkg.dev/portfolio-498917/portfolio-rust/portfolio`.
 
 **Option A — build locally, push, then deploy:**
 ```bash
 # one-time: authenticate Docker to the Artifact Registry region
-gcloud auth configure-docker europe-west2-docker.pkg.dev
+gcloud auth configure-docker europe-west1-docker.pkg.dev
 
 # build, push, and deploy
-docker build -t europe-west2-docker.pkg.dev/portfolio-498917/portfolio-rust/portfolio:latest .
-docker push  europe-west2-docker.pkg.dev/portfolio-498917/portfolio-rust/portfolio:latest
+docker build -t europe-west1-docker.pkg.dev/portfolio-498917/portfolio-rust/portfolio:latest .
+docker push  europe-west1-docker.pkg.dev/portfolio-498917/portfolio-rust/portfolio:latest
 
 gcloud run deploy portfolio \
-  --image europe-west2-docker.pkg.dev/portfolio-498917/portfolio-rust/portfolio:latest \
+  --image europe-west1-docker.pkg.dev/portfolio-498917/portfolio-rust/portfolio:latest \
   --project portfolio-498917 \
-  --region europe-west2 \
+  --region europe-west1 \
   --allow-unauthenticated \
   --port 8080
 ```
@@ -82,12 +82,12 @@ gcloud run deploy portfolio \
 ```bash
 gcloud builds submit \
   --project portfolio-498917 \
-  --tag europe-west2-docker.pkg.dev/portfolio-498917/portfolio-rust/portfolio:latest .
+  --tag europe-west1-docker.pkg.dev/portfolio-498917/portfolio-rust/portfolio:latest .
 
 gcloud run deploy portfolio \
-  --image europe-west2-docker.pkg.dev/portfolio-498917/portfolio-rust/portfolio:latest \
+  --image europe-west1-docker.pkg.dev/portfolio-498917/portfolio-rust/portfolio:latest \
   --project portfolio-498917 \
-  --region europe-west2 \
+  --region europe-west1 \
   --allow-unauthenticated \
   --port 8080
 ```
@@ -100,14 +100,14 @@ then:
 ```bash
 # Apex domains (and optionally the www host) for each domain:
 gcloud beta run domain-mappings create --service portfolio \
-  --domain konudroid.com --region europe-west2
+  --domain konudroid.com --region europe-west1
 gcloud beta run domain-mappings create --service portfolio \
-  --domain www.konudroid.com --region europe-west2
+  --domain www.konudroid.com --region europe-west1
 
 gcloud beta run domain-mappings create --service portfolio \
-  --domain kvsmohanvamsi.com --region europe-west2
+  --domain kvsmohanvamsi.com --region europe-west1
 gcloud beta run domain-mappings create --service portfolio \
-  --domain www.kvsmohanvamsi.com --region europe-west2
+  --domain www.kvsmohanvamsi.com --region europe-west1
 ```
 Each command prints the DNS records to add at your registrar:
 - **Apex** (`konudroid.com`): four `A` records + four `AAAA` records (the Google IPs shown).
