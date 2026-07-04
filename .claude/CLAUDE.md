@@ -1,4 +1,4 @@
-# Code Guidelines
+# Claude Code Guidelines
 
 ## Core Principles
 

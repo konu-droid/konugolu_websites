@@ -21,8 +21,14 @@ async fn main() {
     let app = Router::new()
         .fallback_service(serve_dir);
 
-    // Run our app with hyper
-    let addr = SocketAddr::from(([0, 0, 0, 0], 8080));
+    // Run our app with hyper.
+    // Cloud Run (and most container platforms) inject the listening port via the
+    // PORT environment variable; fall back to 8080 for local development.
+    let port = std::env::var("PORT")
+        .ok()
+        .and_then(|value| value.parse::<u16>().ok())
+        .unwrap_or(8080);
+    let addr = SocketAddr::from(([0, 0, 0, 0], port));
     tracing::debug!("listening on {}", addr);
     
     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();

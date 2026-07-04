@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(env)",
+      "Skill(update-config)",
+      "Bash(rm -f _resume.txt _cmap.pkl pdfextract.py)",
+      "Bash(ls _*.txt _*.pkl)",
+      "Bash(trunk build *)",
+      "Bash(cargo build *)",
+      "Bash(PORT=8080 ../target/release/backend)",
+      "Bash(PORT=8091 ../target/release/backend)",
+      "Bash(python3 *)",
+      "Bash(gcloud auth *)",
+      "Bash(gcloud config *)",
+      "Bash(cargo run *)",
+      "Bash(curl -s -o /dev/null -w \"index: %{http_code}\\\\n\" http://localhost:8080/)",
+      "Bash(curl -s http://localhost:8080/)",
+      "Bash(npm init *)",
+      "Bash(npm install *)",
+      "Bash(npx playwright *)",
+      "Bash(node shoot.js)"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+  "autoMode": {
+    "environment": [
+      "$defaults",
+      "Source control: github.example.com/acme-corp and all repos under it",
+      "Trusted cloud buckets: s3://acme-build-artifacts, gs://acme-ml-datasets",
+      "Trusted internal domains: *.corp.example.com, api.internal.example.com",
+      "Key internal services: Jenkins at ci.example.com, Artifactory at artifacts.example.com"
+    ]
+  }
+}

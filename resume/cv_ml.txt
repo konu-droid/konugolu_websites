@@ -1,0 +1,71 @@
+﻿Mohan Konugolu
+Robotics Engineer
+Preston, UK | 07554 819839 | konudroid@gmail.com | Portfolio | LinkedIn | YouTube | Upwork
+SUMMARY
+Robotics engineer specializing in reinforcement learning and embodied AI — humanoid locomotion and whole-body control, dexterous manipulation, and sim-to-real training in NVIDIA Isaac Sim, Isaac Lab, and Isaac Gym. Experienced with imitation learning, SMPL-X motion retargeting, PPO / SKRL training, and foundation-model perception (Isaac ROS, FoundationPose), with a focus on vision-language-action (VLA) and foundation-model robotics. Strong Python / PyTorch and ROS 2 engineering background, with every project containerized in Docker for reproducible deployment.
+
+
+TECHNICAL SKILLS
+Reinforcement & Imitation Learning:  PPO, SKRL, Isaac Lab, Isaac Gym, reward shaping, sim-to-real transfer, motion retargeting (SMPL-X, PHC)
+Embodied AI & Humanoids:  whole-body control (HOVER), bipedal locomotion, dexterous manipulation, Unitree G1, five-fingered hands; vision-language-action (VLA) and foundation-model robotics
+Foundation Models & Perception:  FoundationPose (6-DoF pose), Isaac ROS, OpenCV, YOLO, MiDaS, point-cloud processing
+Simulation & Digital Twins:  NVIDIA Isaac Sim, Isaac Lab, Isaac Gym, Omniverse USD, Gazebo
+Deep Learning:  PyTorch, CNNs (MobileNetV3), time-series models (MiniRocket)
+Robotics & Middleware:  ROS, ROS 2, Nav2; motion planning (pure pursuit, TEB, clothoid)
+Sensors & Hardware:  2D/3D LiDAR, solid-state LiDAR, IMU, RGB-D cameras, force/torque sensors; AMRs, manipulators, humanoids
+Languages & Deployment:  Python, C++, Bash; Docker (all projects containerized), Git, Linux
+
+
+KEY PROJECTS
+Custom Humanoid Locomotion (Hyperspawn)  —  Isaac Sim · Isaac Lab · PyTorch · PPO
+* Imported an open-source Hyperspawn humanoid featuring 4-bar linkage mechanisms and a Stewart (parallel) platform, solving the closed-chain kinematics in Isaac Sim so simulated dynamics matched the physical robot.
+* Trained a bipedal walking policy with reinforcement learning and integrated an SMPL-X motion-retargeting pipeline (PHC) for combined imitation + RL; credited as a contributor to the Hyperspawn open-source project.
+Humanoid Whole-Body Gesture Control (Unitree G1)  —  HOVER · SMPL-X · Isaac Lab
+* Trained the Unitree G1 humanoid to perform naturalistic, human-like conversational gestures using the HOVER whole-body-control framework.
+* Adapted the motion-retargeting pipeline to ingest SMPL-X data and retarget human motion onto the G1, then extended the task to five-fingered hands for lifelike hand movement during conversation.
+Dexterous Brick-Laying Manipulation  —  Isaac Sim · Isaac Lab · SKRL · PPO
+* Trained a five-fingered industrial manipulator to approach with an open hand, grasp a brick with all five fingers, lift, and place it at a target using PPO (SKRL).
+* Instrumented fingertips with force sensors and added IMUs for closed-loop, contact-aware grasping in a custom Isaac Sim environment.
+RL Motion Control for Autonomous Navigation  —  Isaac Sim · ROS 2 · Nav2
+* Integrated a reinforcement-learning motion-control policy with the Nav2 stack plus custom low-speed smoothing for stable steering.
+* Built a custom-vehicle Isaac Sim scene (LiDAR, camera, IMU, motor control) bridged to ROS 2; trained and tested policies that avoid slow-moving pedestrians while navigating point to point.
+Robot Factory Digital Twin  —  Isaac Sim · ROS 2 · Isaac Lab
+* Built physics-accurate Isaac Sim digital twins of robot factories with multiple coordinated robots and simulated LiDAR, camera, and IMU streams.
+* Wired the twin to ROS 2 and Isaac Lab so client teams could validate control logic and train RL policies before hardware deployment.
+Foundation-Model Perception: 6-DoF Pose Pipeline  —  NVIDIA Isaac ROS · FoundationPose
+* Implemented a FoundationPose 6-DoF object pose-estimation and tracking pipeline using NVIDIA Isaac ROS.
+* Integrated the pose output into Isaac Sim and a ROS 2 perception graph for a client perception system.
+Autonomous Mobile Robot Software Stack  —  C++ · ROS · 2D LiDAR
+* Built a full AMR autonomy stack: double-look-ahead pure-pursuit tracking, clothoid path generation, and TEB local planning.
+* Coded 3-zone 2D-LiDAR safety monitoring and a trolley-leg detection algorithm for autonomous docking.
+Monocular Depth Estimation  —  PyTorch · YOLO · MiDaS
+* Trained a deep network (YOLO boxes + MiDaS relative depth) for absolute object-level depth — 0.18 m MAE in-house, 1.1 m on nuScenes; selected for a poster at Bosch Germany's internal AAI research conference.
+LiDAR Cover-Glass Blockage Detection  —  PyTorch · MiniRocket · MobileNetV3
+* Detected cover-glass occlusion on a solid-state LiDAR with MiniRocket (photon time-series) and MobileNetV3 (3-channel point-cloud images), both above 90% accuracy.
+
+
+PROFESSIONAL EXPERIENCE
+Robotics Consultant (Freelance) — Upwork Feb 2024 – Present
+Remote
+* Top Rated consultant (100% Job Success, 20 jobs, 597+ hours) training RL policies and building Isaac Sim digital twins for robotics companies worldwide; every project containerized with Docker.
+* Specialize in humanoid and manipulator reinforcement learning (Isaac Lab, SKRL, PPO), motion retargeting (SMPL-X), and foundation-model perception (Isaac ROS, FoundationPose).
+* Build Isaac Sim digital twins of factories and custom robots (AMRs and manipulators) and port full software stacks to ROS 2 / Isaac Lab for control and RL.
+Software Developer — Bosch Global Software Technologies (BGSW) Sep 2022 – Feb 2024
+India
+* Built reinforcement-learning vehicle control and computer-vision depth perception for autonomous driving, validated on in-house test vehicles.
+* Developed ML occlusion detection for an in-house solid-state-LiDAR cover glass (above 90% accuracy).
+Robotics Engineer — ZeroPoint Robotics Aug 2021 – Aug 2022
+India
+* Core engineer on an autonomous mobile robot; built pure-pursuit path tracking, clothoid path generation, TEB local planning, and 2D-LiDAR safety.
+* Implemented 3-zone 2D-LiDAR safety and a trolley-leg detection algorithm for autonomous docking.
+Deployment Engineer — THRSL Dec 2020 – Jul 2021
+India
+* Built pallet-detection perception and deployed the autonomous mobile robot on-site.
+* Commissioned two autonomous pallet jacks in a live factory: 2D-LiDAR mapping, localization, safety functions, and extended long-term mission testing.
+
+
+EDUCATION
+MSc, Robotics and Artificial Intelligence Sep 2024 – Sep 2025
+Cardiff Metropolitan University — Cardiff, UK
+BEng, Mechatronics 2016 – 2020
+Chandigarh University — Punjab, India

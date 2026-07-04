@@ -1,1 +1,1 @@
-/home/konu/Documents/portfolio/website/target/release/backend: /home/konu/Documents/portfolio/website/backend/src/main.rs
+/home/konu/Documents/portfolio/portfolio_website/target/release/backend: /home/konu/Documents/portfolio/portfolio_website/backend/src/main.rs

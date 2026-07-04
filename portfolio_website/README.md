@@ -42,5 +42,80 @@ cargo run --release
 ```
 Your portfolio will be live at: [http://localhost:8080](http://localhost:8080)
 
+## Deployment (Docker + Google Cloud Run)
+
+The repository ships a multi-stage [`Dockerfile`](./Dockerfile) that builds the WASM
+frontend with Trunk, compiles the Axum backend, and produces a slim Debian runtime
+image. The server reads the `PORT` environment variable (Cloud Run injects this,
+defaulting to `8080`), so the same image runs locally and in the cloud.
+
+### 1. Build & run locally with Docker
+```bash
+# From the portfolio_website/ directory:
+docker build -t portfolio .
+docker run --rm -p 8080:8080 portfolio
+# → http://localhost:8080
+```
+
+### 2. Deploy to Cloud Run
+The image lives in Artifact Registry at
+`europe-west2-docker.pkg.dev/portfolio-498917/portfolio-rust/portfolio`.
+
+**Option A — build locally, push, then deploy:**
+```bash
+# one-time: authenticate Docker to the Artifact Registry region
+gcloud auth configure-docker europe-west2-docker.pkg.dev
+
+# build, push, and deploy
+docker build -t europe-west2-docker.pkg.dev/portfolio-498917/portfolio-rust/portfolio:latest .
+docker push  europe-west2-docker.pkg.dev/portfolio-498917/portfolio-rust/portfolio:latest
+
+gcloud run deploy portfolio \
+  --image europe-west2-docker.pkg.dev/portfolio-498917/portfolio-rust/portfolio:latest \
+  --project portfolio-498917 \
+  --region europe-west2 \
+  --allow-unauthenticated \
+  --port 8080
+```
+
+**Option B — let Cloud Build build & push (no local Docker):**
+```bash
+gcloud builds submit \
+  --project portfolio-498917 \
+  --tag europe-west2-docker.pkg.dev/portfolio-498917/portfolio-rust/portfolio:latest .
+
+gcloud run deploy portfolio \
+  --image europe-west2-docker.pkg.dev/portfolio-498917/portfolio-rust/portfolio:latest \
+  --project portfolio-498917 \
+  --region europe-west2 \
+  --allow-unauthenticated \
+  --port 8080
+```
+Cloud Run terminates TLS and serves the container over HTTPS automatically.
+
+### 3. Map the custom domains
+Map both `konudroid.com` and `kvsmohanvamsi.com` to the same service. First verify
+ownership of each domain in [Google Search Console](https://search.google.com/search-console),
+then:
+```bash
+# Apex domains (and optionally the www host) for each domain:
+gcloud beta run domain-mappings create --service portfolio \
+  --domain konudroid.com --region europe-west2
+gcloud beta run domain-mappings create --service portfolio \
+  --domain www.konudroid.com --region europe-west2
+
+gcloud beta run domain-mappings create --service portfolio \
+  --domain kvsmohanvamsi.com --region europe-west2
+gcloud beta run domain-mappings create --service portfolio \
+  --domain www.kvsmohanvamsi.com --region europe-west2
+```
+Each command prints the DNS records to add at your registrar:
+- **Apex** (`konudroid.com`): four `A` records + four `AAAA` records (the Google IPs shown).
+- **`www`** subdomain: a single `CNAME` to `ghs.googlehosted.com`.
+
+After the DNS records propagate, Cloud Run provisions managed TLS certificates for
+both domains. (Domain mapping is also available as a one-click action in the Cloud
+Run console under **Manage Custom Domains** if you prefer the UI.)
+
 ## Further Reading
 For a detailed explanation of individual functions, state management techniques, and styling rules, please refer to the [docs.md](./docs.md) file included in this repository.

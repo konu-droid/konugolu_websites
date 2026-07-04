@@ -1,0 +1,73 @@
+﻿Mohan Konugolu
+Robotics Engineer
+Preston, UK | 07554 819839 | konudroid@gmail.com | Portfolio | LinkedIn | YouTube | Upwork
+
+
+SUMMARY
+Robotics engineer with 5+ years across robotics consulting, autonomous driving, and mobile-robot startups. Proven from on-site deployment and perception through to full autonomy stacks and reinforcement learning, with deep NVIDIA Isaac Sim, Isaac Lab, and ROS / ROS 2 expertise. Top Rated freelance consultant building digital twins and RL pipelines for robotics companies worldwide, with every project containerized in Docker for reproducible deployment.
+
+
+TECHNICAL SKILLS
+Languages:  Python, C++, Bash
+Robotics & Middleware:  ROS, ROS 2, Nav2, real-time control
+Simulation & Digital Twins:  NVIDIA Isaac Sim, Isaac Lab, Isaac Gym, Omniverse USD, Gazebo
+Reinforcement & Imitation Learning:  PPO, SKRL, Isaac Lab, reward shaping, sim-to-real, motion retargeting (SMPL-X, PHC), whole-body control (HOVER)
+Perception & Computer Vision:  OpenCV, YOLO, MiDaS, point-cloud processing, 6-DoF pose estimation (FoundationPose), Isaac ROS
+Deep Learning:  PyTorch, CNNs (MobileNetV3), time-series classification (MiniRocket)
+Motion Planning & Control:  pure pursuit, Timed Elastic Band (TEB), clothoid path generation, path tracking, LiDAR safety zones
+Mapping & Localization:  2D-LiDAR mapping (SLAM), localization, autonomous navigation and docking
+Sensors & Hardware:  2D/3D LiDAR, solid-state LiDAR, IMU, RGB-D cameras, force/torque sensors; AMRs, manipulators, humanoids (Unitree G1)
+Deployment & Tools:  Docker (all projects containerized), Git, Linux
+
+
+PROFESSIONAL EXPERIENCE
+Robotics Consultant (Freelance) — Upwork Feb 2024 – Present
+Remote
+* Top Rated robotics consultant (100% Job Success, 20 jobs, 597+ hours) delivering NVIDIA Isaac Sim simulation and reinforcement-learning solutions to robotics companies worldwide; all projects containerized with Docker for easy deployment.
+* Ported complete robot software stacks to ROS 2 / Isaac Sim and implemented a FoundationPose 6-DoF object-pose pipeline using NVIDIA Isaac ROS.
+Robot Factory Digital Twin (AMRs & Manipulators)
+* Built large-scale Isaac Sim factory environments with multiple coordinated robots and simulated LiDAR, camera, and IMU streams.
+* Wired the twin to ROS 2 and Isaac Lab so client teams could validate control logic and train RL policies before hardware rollout.
+Custom Humanoid Simulation & RL Locomotion (Hyperspawn)
+* Imported an open-source humanoid with 4-bar linkages and a Stewart platform into Isaac Sim and solved the closed-chain kinematics so the simulation matched the real robot.
+* Trained a bipedal walking policy with reinforcement learning and integrated an SMPL-X motion-retargeting (PHC) pipeline for imitation + RL; credited as an open-source contributor.
+* Built the RL training pipeline in Isaac Lab and validated stable, real-robot-like locomotion in simulation.
+Humanoid Whole-Body Gesture Control (Unitree G1)
+* Trained the Unitree G1 to perform naturalistic conversational gestures using the HOVER whole-body-control framework.
+* Adapted the SMPL-X motion-retargeting pipeline and extended the task to five-fingered hands for lifelike hand movement while talking.
+Dexterous Brick-Laying Manipulation
+* Built a custom Isaac Sim environment with a five-fingered arm, fingertip force sensors, and IMUs.
+* Trained with PPO (SKRL) to approach, grasp with all five fingers, lift, and place bricks at a target location.
+* Tuned the reward function for a smooth approach-grasp-lift-place sequence and reliable placement accuracy.
+RL Motion Control for Autonomous Navigation
+* Built a custom-vehicle Isaac Sim scene (LiDAR, camera, IMU) bridged to ROS 2 and integrated an RL policy with Nav2 for smooth low-speed navigation and pedestrian avoidance.
+* Added custom low-speed smoothing for stable steering and validated point-to-point navigation around slow-moving pedestrians.
+Software Developer — Bosch Global Software Technologies (BGSW) Sep 2022 – Feb 2024
+India
+* Developed machine learning for autonomous driving with a focus on computer-vision depth perception and reinforcement-learning vehicle control.
+Monocular Depth Estimation
+* Trained a deep network (YOLO boxes + MiDaS relative depth) for absolute object-level depth — 0.18 m MAE in-house, 1.1 m on the nuScenes dataset.
+* Selected for a poster presentation at Bosch Germany's internal AAI research conference.
+LiDAR Cover-Glass Blockage Detection
+* Detected cover-glass occlusion on a solid-state LiDAR with MiniRocket (photon time-series) and MobileNetV3 (3-channel point-cloud images), both above 90% accuracy.
+* Compared the raw-photon time-series and point-cloud-image approaches and selected the stronger model for deployment.
+Robotics Engineer — ZeroPoint Robotics Aug 2021 – Aug 2022
+India
+* Core software engineer for an autonomous material-handling mobile robot; owned the full stack from safety to motion planning.
+Autonomous Mobile Robot Software Stack
+* Developed a double-look-ahead pure-pursuit path tracker and clothoid-based continuous-curvature path generation; deployed industry-standard Timed Elastic Band (TEB) for efficient local planning.
+* Coded 3-zone 2D-LiDAR safety monitoring and a trolley-leg detection algorithm for autonomous docking.
+Deployment Engineer — THRSL Dec 2020 – Jul 2021
+India
+* Developed pallet-detection perception and executed on-site deployment of the mobile robot.
+Autonomous Pallet-Jack Commissioning
+* Installed two autonomous battery-operated pallet jacks in a working factory, setting up 2D-LiDAR mapping, localization, route verification, and motion-controller tuning.
+* Tuned route-following and docking behavior and coordinated on-site acceptance testing with the factory team.
+* Validated safety sensors and functions and ran extended long-term operation across predetermined routes and missions.
+
+
+EDUCATION
+MSc, Robotics and Artificial Intelligence Sep 2024 – Sep 2025
+Cardiff Metropolitan University — Cardiff, UK
+BEng, Mechatronics 2016 – 2020
+Chandigarh University — Punjab, India

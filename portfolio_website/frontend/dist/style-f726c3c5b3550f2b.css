@@ -182,6 +182,8 @@ nav {
 
 .hero-buttons {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 16px;
 }
 
@@ -270,6 +272,14 @@ nav {
   height: 4px;
   background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
   border-radius: 2px;
+}
+
+/* Small helper line shown under a section title (e.g. "click to expand" hint) */
+.section-hint {
+  text-align: center;
+  color: var(--text-secondary);
+  margin: -40px 0 40px;
+  font-size: 16px;
 }
 
 /* Glassmorphism Cards */
@@ -399,17 +409,128 @@ nav {
   margin-bottom: 10px;
 }
 
-/* Projects */
-.projects-header {
-  margin-top: 60px;
-  margin-bottom: 30px;
-  font-size: 28px;
+/* Expandable experience cards (native <details>/<summary>) */
+.experience-card > summary {
+  cursor: pointer;
+  list-style: none; /* hide the default disclosure triangle */
+}
+
+.experience-card > summary::-webkit-details-marker {
+  display: none; /* Safari/Chrome default marker */
+}
+
+.experience-blurb {
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+
+/* "click to expand" affordance under the collapsed card header */
+.expand-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   color: var(--accent);
+  font-weight: 700;
+  font-size: 14px;
+  background: rgba(255, 140, 66, 0.1);
+  padding: 6px 14px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.experience-card > summary:hover .expand-hint {
+  background: rgba(255, 140, 66, 0.2);
+}
+
+.expand-chevron {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.experience-card[open] .expand-chevron {
+  transform: rotate(180deg);
+}
+
+/* Revealed body: role highlights + related projects */
+.experience-body {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px dashed var(--card-border);
+  animation: reveal 0.35s ease;
+}
+
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.related-heading {
+  margin: 28px 0 16px;
+  font-size: 18px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.related-projects {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.related-project {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.related-project:hover {
+  border-color: var(--accent-secondary);
+  box-shadow: 0 8px 20px rgba(255, 140, 66, 0.1);
+}
+
+.related-project h4 {
+  font-size: 17px;
+  margin-bottom: 10px;
+}
+
+.related-project p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Projects */
+.projects-grid {
+  display: grid;
+  /* min(340px, 100%) keeps cards from overflowing on very narrow screens */
+  grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
+  gap: 32px;
 }
 
 .project-card h3 {
   font-size: 24px;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+/* Technology tag pills shown on project cards */
+.project-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tech-tag {
+  background: rgba(255, 140, 66, 0.1);
+  color: var(--accent);
+  border: 1px solid var(--card-border);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 .project-company {
@@ -588,5 +709,32 @@ footer {
   
   .nav-links a {
     font-size: 14px;
+  }
+
+  .related-projects {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Narrow phones: tighten card padding and the timeline gutter */
+@media (max-width: 600px) {
+  .glass-card {
+    padding: 28px 22px;
+  }
+
+  .timeline-item {
+    padding-left: 36px;
+  }
+
+  .timeline-item::after {
+    left: -2px;
+  }
+
+  .hero-text h1 {
+    font-size: 42px;
+  }
+
+  .section-title {
+    font-size: 32px;
   }
 }

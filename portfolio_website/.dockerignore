@@ -1,0 +1,9 @@
+# Rust build artifacts — rebuilt inside the image, so never ship them as context.
+target/
+frontend/dist/
+
+# Local tooling / editor / VCS noise.
+.git/
+.gitignore
+**/*.md
+.claude/
